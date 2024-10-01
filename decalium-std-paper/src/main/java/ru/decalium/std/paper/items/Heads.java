@@ -3,9 +3,12 @@ package ru.decalium.std.paper.items;
 import com.destroystokyo.paper.profile.PlayerProfile;
 import com.destroystokyo.paper.profile.ProfileProperty;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
 import org.bukkit.Bukkit;
 
 import java.util.Base64;
+import java.util.Optional;
 import java.util.UUID;
 
 public final class Heads {
@@ -27,6 +30,12 @@ public final class Heads {
         JsonObject object = new JsonObject();
         object.add("textures", textures);
         return base64(Base64.getEncoder().encodeToString(object.toString().getBytes()));
+    }
+
+    public static Optional<String> getTextures(PlayerProfile profile) {
+        return profile.getProperties().stream().filter(property -> "textures".equals(property.getName()))
+                .map(ProfileProperty::getValue).findAny();
+
     }
 
     public static final PlayerProfile GREEN_CHECKMARK = fromId("a92e31ffb59c90ab08fc9dc1fe26802035a3a47c42fee63423bcdb4262ecb9b6");
