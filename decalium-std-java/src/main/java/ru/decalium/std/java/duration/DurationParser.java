@@ -68,7 +68,7 @@ public final class DurationParser {
             if (unit == null) {
                 throw new ParseException("unknown suffix: " + suffix, parsePosition.getIndex());
             }
-            total += Math.round(TimeUnit.SECONDS.convert(Math.round(number), unit));
+            total += TimeUnit.SECONDS.convert(Math.round(number), unit);
 
             // Advance and consume whitespace
             parsePosition.setIndex(parsePosition.getIndex() + 1);
