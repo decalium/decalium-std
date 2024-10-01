@@ -27,7 +27,7 @@ public final class PlayerName implements ComponentLike {
 
     @Override
     public @NotNull Component asComponent() {
-        OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
+        OfflinePlayer player = server.getOfflinePlayer(uuid);
         Player onlinePlayer = player.getPlayer();
         if(onlinePlayer != null) return onlinePlayer.displayName();
         String name = player.getName();
