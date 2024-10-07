@@ -7,6 +7,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 import java.util.function.Predicate;
@@ -26,12 +27,12 @@ public final class RayTraceBuilder {
     }
 
     public RayTraceBuilder start(Location start) {
-        this.start = start;
+        this.start = Objects.requireNonNull(start);
         return this;
     }
 
     public RayTraceBuilder direction(Vector direction) {
-        this.direction = direction;
+        this.direction = Objects.requireNonNull(direction);
         return this;
     }
 
@@ -41,7 +42,7 @@ public final class RayTraceBuilder {
     }
 
     public RayTraceBuilder fluidCollisionMode(FluidCollisionMode fluidCollisionMode) {
-        this.fluidCollisionMode = fluidCollisionMode;
+        this.fluidCollisionMode = Objects.requireNonNull(fluidCollisionMode);
         return this;
     }
 
@@ -55,7 +56,7 @@ public final class RayTraceBuilder {
         return this;
     }
 
-    public RayTraceBuilder filter(Predicate<Entity> filter) {
+    public RayTraceBuilder filter(@Nullable Predicate<Entity> filter) {
         this.filter = filter;
         return this;
     }
