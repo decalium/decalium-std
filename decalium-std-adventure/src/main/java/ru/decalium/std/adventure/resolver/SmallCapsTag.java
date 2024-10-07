@@ -1,5 +1,6 @@
 package ru.decalium.std.adventure.resolver;
 
+import net.kyori.adventure.text.BuildableComponent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.minimessage.tag.Modifying;
@@ -21,6 +22,7 @@ final class SmallCapsTag implements Modifying {
                 c[i] = ALPHABET[ch - 'a'];
             }
         }
-        return text.toBuilder().content(new String(c)).mapChildren(comp -> (net.kyori.adventure.text.BuildableComponent<?, ?>) apply(comp, 0)).build();
+        return text.toBuilder().content(new String(c))
+                .mapChildren(comp -> (BuildableComponent<?, ?>) apply(comp, 0)).build();
     }
 }
