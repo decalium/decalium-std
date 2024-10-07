@@ -7,4 +7,5 @@ dependencies {
     compileOnly("net.kyori:adventure-api:4.17.0")
     compileOnly("net.kyori:adventure-text-minimessage:4.17.0")
     compileOnly("net.kyori:adventure-text-serializer-legacy:4.17.0")
+    compileOnly("org.spongepowered:configurate-core:4.1.2")
 }
