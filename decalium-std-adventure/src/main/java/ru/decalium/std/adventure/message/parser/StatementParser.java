@@ -33,7 +33,7 @@ public final class StatementParser {
         if (!matcher.matches()) {
             return new ChatStatement(string, miniMessage);
         }
-        String type = matcher.group(1);
+        String type = matcher.group(1).toLowerCase();
         StatementFactory factory = statementRegistry.factory(type).orElse(null);
         if(factory == null) return new ChatStatement(string, miniMessage);
         Deque<Arg> args = new ArrayDeque<>();
