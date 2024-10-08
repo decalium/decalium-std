@@ -2,9 +2,9 @@ package ru.decalium.std.adventure.message.parser;
 
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.minimessage.ParsingException;
-import net.kyori.adventure.text.minimessage.internal.parser.ParsingExceptionImpl;
 import ru.decalium.std.adventure.message.TextMessage;
+
+import java.util.Locale;
 
 
 public final class Arg {
@@ -46,5 +46,13 @@ public final class Arg {
 
     public TextMessage readText() {
         return TextMessage.message(this.value, this.miniMessage);
+    }
+
+    public <E extends Enum<E>> E readEnum(Class<E> type) throws ParseException {
+        try {
+            return Enum.valueOf(type, this.value.toUpperCase(Locale.ROOT));
+        } catch(IllegalArgumentException ex) {
+            throw new ParseException("Invalid " + type.getSimpleName() + ": " + this.value, ex);
+        }
     }
 }
