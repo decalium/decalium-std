@@ -50,7 +50,7 @@ publishing {
     }
     repositories {
         maven {
-            name = "decalium-repo" //  optional target repository name
+            name = "decalium" //  optional target repository name
             url = uri("https://repo.decalium.ru/releases/")
             credentials {
                 username = System.getenv("REPOSILITE_USER")
