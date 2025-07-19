@@ -20,5 +20,5 @@ dependencies {
     api("org.incendo:cloud-minecraft-extras:2.0.0-beta.8")
 
     compileOnly("org.spongepowered:configurate-core:4.1.2")
-    compileOnly("ru.decalium:action:0.0.1")
+    api(project(":decalium-std-adventure"))
 }

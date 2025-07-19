@@ -27,7 +27,6 @@ public class DecaliumExceptionHandler {
         messages.invalidSyntax.send(sender);
     }
 
-
     @ExceptionHandler(NoPermissionException.class)
     public void noPermission(Audience sender, NoPermissionException exception) {
         messages.noPermission.send(sender);

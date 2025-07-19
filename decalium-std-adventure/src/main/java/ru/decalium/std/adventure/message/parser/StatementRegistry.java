@@ -45,6 +45,11 @@ public final class StatementRegistry {
             return this;
         }
 
+        public Builder remove(String name) {
+            this.factories.remove(name);
+            return this;
+        }
+
         public Builder all(StatementRegistry registry) {
             this.factories.putAll(registry.factories);
             return this;

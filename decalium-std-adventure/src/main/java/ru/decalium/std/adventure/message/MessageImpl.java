@@ -53,5 +53,11 @@ record MessageImpl(List<Statement> statements) implements Message {
             TagResolver r = TagResolver.resolver(resolver, this.builder.build());
             for(Statement statement : this.statements) statement.send(audience, r);
         }
+
+        @Override
+        public void send(Audience audience) {
+            TagResolver r = this.builder.build();
+            for(Statement statement : this.statements) statement.send(audience, r);
+        }
     }
 }
