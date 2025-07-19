@@ -15,7 +15,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
-import ru.decalium.action.message.Formatted;
+import ru.decalium.std.adventure.message.Format;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,7 +23,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.Consumer;
 
-public final class ItemBuilder implements Formatted<ItemBuilder> {
+public final class ItemBuilder implements Format<ItemBuilder> {
 
     private final ItemStack item;
     private final ItemMeta meta;
