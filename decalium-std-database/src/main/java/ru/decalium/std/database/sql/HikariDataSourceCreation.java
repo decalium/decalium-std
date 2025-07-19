@@ -6,24 +6,25 @@ import com.zaxxer.hikari.HikariDataSource;
 import java.io.File;
 import java.nio.file.Path;
 import java.text.MessageFormat;
+import java.util.StringTokenizer;
 
 public class HikariDataSourceCreation {
 
 
     private final SqlConfig sqlConfig;
     private final File dataFolder;
-    private final String poolName;
+    private final String name;
 
-    public HikariDataSourceCreation(SqlConfig sqlConfig, File dataFolder, String poolName) {
+    public HikariDataSourceCreation(SqlConfig sqlConfig, File dataFolder, String name) {
         this.sqlConfig = sqlConfig;
         this.dataFolder = dataFolder;
-        this.poolName = poolName;
+        this.name = name;
     }
 
 
     public HikariDataSource create() {
         HikariConfig config = new HikariConfig();
-        config.setPoolName(poolName);
+        config.setPoolName(name + "Pool");
         setupConnection(config);
         setupPooling(config);
         return new HikariDataSource(config);
@@ -38,7 +39,7 @@ public class HikariDataSourceCreation {
             username = sqlConfig.username();
             password = sqlConfig.password();
         } else {
-            Path path = dataFolder.toPath().resolve("battlepass");
+            Path path = dataFolder.toPath().resolve(name);
             url = MessageFormat.format("jdbc:h2:file:./{0};mode=MySQL", path);
             username = "sa";
             password = "";

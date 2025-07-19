@@ -7,6 +7,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 import org.bukkit.Bukkit;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Optional;
 import java.util.UUID;
@@ -16,7 +17,7 @@ public final class Heads {
     private Heads() {}
 
     public static PlayerProfile base64(String base64) {
-        PlayerProfile profile = Bukkit.createProfile(new UUID(base64.hashCode(), base64.hashCode()));
+        PlayerProfile profile = Bukkit.createProfile(UUID.nameUUIDFromBytes(base64.getBytes(StandardCharsets.UTF_8)));
         profile.setProperty(new ProfileProperty("textures", base64));
         return profile;
     }

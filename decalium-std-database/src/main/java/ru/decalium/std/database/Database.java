@@ -11,7 +11,6 @@ import ru.decalium.std.database.sql.SqlConfig;
 
 import java.io.File;
 import java.util.Objects;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 
 public final class Database {
@@ -44,7 +43,7 @@ public final class Database {
     public static class Builder {
         private ClassLoader classLoader;
         private File dataFolder;
-        private String poolName;
+        private String name;
         private SqlConfig config;
 
         private Logger logger;
@@ -64,8 +63,8 @@ public final class Database {
             return this;
         }
 
-        public Builder poolName(String poolName) {
-            this.poolName = poolName;
+        public Builder name(String name) {
+            this.name = name;
             return this;
         }
 
@@ -82,10 +81,10 @@ public final class Database {
         public Database build() {
             Objects.requireNonNull(classLoader);
             Objects.requireNonNull(dataFolder);
-            Objects.requireNonNull(poolName);
+            Objects.requireNonNull(name);
             Objects.requireNonNull(executor);
             Objects.requireNonNull(logger);
-            HikariDataSource source = new HikariDataSourceCreation(this.config, this.dataFolder, this.poolName).create();
+            HikariDataSource source = new HikariDataSourceCreation(this.config, this.dataFolder, this.name).create();
             Jdbi jdbi = new JdbiCreation(source).create();
             Flyway flyway = Flyway.configure(classLoader)
                     .dataSource(source)

@@ -24,7 +24,7 @@ public final class ConfigManager {
         return new ConfigManager(opts -> options.apply(this.defaultOptions.apply(opts)), this.dataFolder);
     }
 
-    private YamlConfigurationLoader loader(File file) {
+    public YamlConfigurationLoader loader(File file) {
         return YamlConfigurationLoader.builder().defaultOptions(defaultOptions).file(file)
                 .nodeStyle(NodeStyle.BLOCK).indent(2).build();
     }

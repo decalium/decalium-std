@@ -4,10 +4,7 @@ package ru.decalium.std.java.duration;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.ParsePosition;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.StringJoiner;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public final class DurationParser {
@@ -31,7 +28,7 @@ public final class DurationParser {
     );
 
     public static DurationParser create(Map<Character, TimeUnit> units) {
-        SortedMap<TimeUnit, Character> unitToChar = new TreeMap<>();
+        SortedMap<TimeUnit, Character> unitToChar = new TreeMap<>(Comparator.reverseOrder());
         units.forEach((c, unit) -> unitToChar.put(unit, c));
         return new DurationParser(units, unitToChar);
     }

@@ -32,7 +32,8 @@ public final class ItemSourceSerializer implements TypeSerializer<ItemSource> {
         if(obj instanceof ItemSource.MaterialSource materialSource) {
             node.set(materialSource.material().key().asString());
         } else if(obj instanceof ItemSource.SkullSource skull) {
-            String base64 = skull.profile().getProperties().stream().filter(property -> "textures".equals(property.getName()))
+            String base64 = skull.profile().getProperties().stream()
+                    .filter(property -> "textures".equals(property.getName()))
                     .map(ProfileProperty::getValue).findAny().orElseThrow();
             node.set("skull:" + base64);
         }
