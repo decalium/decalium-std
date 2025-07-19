@@ -3,12 +3,10 @@ package ru.decalium.std.adventure.message.parser;
 import com.google.common.base.Splitter;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import ru.decalium.std.adventure.message.Statement;
-import ru.decalium.std.adventure.message.TextMessage;
 import ru.decalium.std.adventure.message.statements.ChatStatement;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

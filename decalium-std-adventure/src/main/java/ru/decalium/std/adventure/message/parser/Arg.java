@@ -2,7 +2,7 @@ package ru.decalium.std.adventure.message.parser;
 
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import ru.decalium.std.adventure.message.TextMessage;
+import ru.decalium.std.adventure.message.MiniString;
 
 import java.util.Locale;
 
@@ -44,8 +44,8 @@ public final class Arg {
         return Key.key(this.value);
     }
 
-    public TextMessage readText() {
-        return TextMessage.message(this.value, this.miniMessage);
+    public MiniString readMiniString() {
+        return MiniString.miniString(this.value, this.miniMessage);
     }
 
     public <E extends Enum<E>> E readEnum(Class<E> type) throws ParseException {

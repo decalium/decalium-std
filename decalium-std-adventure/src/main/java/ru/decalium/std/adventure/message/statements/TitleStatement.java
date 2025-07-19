@@ -2,20 +2,19 @@ package ru.decalium.std.adventure.message.statements;
 
 import net.kyori.adventure.audience.Audience;
 
-import net.kyori.adventure.text.minimessage.tag.resolver.ArgumentQueue;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.kyori.adventure.title.Title;
 import net.kyori.adventure.title.TitlePart;
 import net.kyori.adventure.util.Ticks;
 import org.jetbrains.annotations.Nullable;
 import ru.decalium.std.adventure.message.Statement;
-import ru.decalium.std.adventure.message.TextMessage;
+import ru.decalium.std.adventure.message.MiniString;
 import ru.decalium.std.adventure.message.parser.ArgQueue;
 import ru.decalium.std.adventure.message.parser.ParseException;
 import ru.decalium.std.adventure.message.parser.StatementFactory;
 
-public record TitleStatement(@Nullable TextMessage title,
-                             @Nullable TextMessage subtitle,
+public record TitleStatement(@Nullable MiniString title,
+                             @Nullable MiniString subtitle,
                              @Nullable Title.Times times) implements Statement {
 
 
@@ -39,10 +38,10 @@ public record TitleStatement(@Nullable TextMessage title,
 
     public static StatementFactory factory() {
         return queue -> {
-            TextMessage title = queue.pop().readText();
-            TextMessage subtitle = null;
+            MiniString title = queue.pop().readMiniString();
+            MiniString subtitle = null;
             if(queue.hasNext()) {
-                subtitle = queue.pop().readText();
+                subtitle = queue.pop().readMiniString();
             }
             Title.Times times = readTimes(queue);
             return new TitleStatement(title, subtitle, times);
@@ -51,7 +50,7 @@ public record TitleStatement(@Nullable TextMessage title,
 
     public static StatementFactory subtitleFactory() {
         return queue -> {
-            TextMessage subtitle = queue.pop().readText();
+            MiniString subtitle = queue.pop().readMiniString();
             Title.Times times = readTimes(queue);
             return new TitleStatement(null, subtitle, times);
         };

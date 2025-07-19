@@ -4,13 +4,13 @@ import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import ru.decalium.std.adventure.message.Statement;
-import ru.decalium.std.adventure.message.TextMessage;
+import ru.decalium.std.adventure.message.MiniString;
 import ru.decalium.std.adventure.message.parser.StatementFactory;
 
-public record ChatStatement(TextMessage message) implements Statement {
+public record ChatStatement(MiniString message) implements Statement {
 
     public ChatStatement(String value, MiniMessage miniMessage) {
-        this(TextMessage.message(value, miniMessage));
+        this(MiniString.miniString(value, miniMessage));
     }
 
     @Override
@@ -19,7 +19,7 @@ public record ChatStatement(TextMessage message) implements Statement {
     }
 
     public static StatementFactory factory() {
-        return queue -> new ChatStatement(queue.pop().readText());
+        return queue -> new ChatStatement(queue.pop().readMiniString());
     }
 
 

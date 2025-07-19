@@ -5,21 +5,21 @@ import net.kyori.adventure.text.ComponentLike;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 
-public interface TextMessage extends Format<TextMessage>, ComponentLike {
+public interface MiniString extends Format<MiniString>, ComponentLike {
 
     String value();
 
     MiniMessage miniMessage();
 
-    static TextMessage message(String value, MiniMessage miniMessage) {
-        return new TextMessageImpl(value, miniMessage);
+    static MiniString miniString(String value, MiniMessage miniMessage) {
+        return new MiniStringImpl(value, miniMessage);
     }
 
     default Component asComponent(TagResolver resolver) {
         return this.miniMessage().deserialize(this.value(), resolver);
     }
 
-    static TextMessage message(String value) {
-        return message(value, MiniMessage.miniMessage());
+    static MiniString miniString(String value) {
+        return miniString(value, MiniMessage.miniMessage());
     }
 }
