@@ -3,16 +3,16 @@ plugins {
 }
 
 dependencies {
-    api("com.zaxxer:HikariCP:5.0.1") {
+    compileOnlyApi("com.zaxxer:HikariCP:5.0.1") {
         exclude(group = "org.slf4j", module = "slf4j-api")
     }
-    api("org.jdbi:jdbi3-core:3.37.1") {
+    compileOnlyApi("org.jdbi:jdbi3-core:3.37.1") {
         exclude(group = "org.slf4j", module = "slf4j-api")
     }
-    api("org.flywaydb:flyway-core:10.12.0") {
+    compileOnlyApi("org.flywaydb:flyway-core:10.12.0") {
         exclude("com.google.code.gson", "gson")
     }
-    api("org.flywaydb:flyway-mysql:10.12.0") {
+    compileOnlyApi("org.flywaydb:flyway-mysql:10.12.0") {
         exclude("com.google.code.gson", "gson")
     }
 
