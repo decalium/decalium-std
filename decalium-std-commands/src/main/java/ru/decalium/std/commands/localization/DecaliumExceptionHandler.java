@@ -1,19 +1,30 @@
-package ru.decalium.std.commands.configurate;
+package ru.decalium.std.commands.localization;
 
 import net.kyori.adventure.audience.Audience;
 import org.incendo.cloud.annotations.exception.ExceptionHandler;
 import org.incendo.cloud.exception.*;
+import org.incendo.cloud.exception.parsing.ParserException;
+import ru.decalium.std.commands.configurate.CommandMessages;
 
 public class DecaliumExceptionHandler {
 
     private final CommandMessages messages;
+    private final ParserMessages parserMessages;
 
-    public DecaliumExceptionHandler(CommandMessages messages) {
+    public DecaliumExceptionHandler(CommandMessages messages, ParserMessages parserMessages) {
         this.messages = messages;
+        this.parserMessages = parserMessages;
     }
 
     @ExceptionHandler(ArgumentParseException.class)
     public void argumentParseFailed(Audience sender, ArgumentParseException exception) {
+        if(exception.getCause() instanceof ParserException ex) {
+            var message = parserMessages.getFormatted(ex).orElse(null);
+            if(message != null) {
+                message.send(sender);
+                return;
+            }
+        }
         messages.invalidSyntax.send(sender);
     }
 
