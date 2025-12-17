@@ -79,15 +79,9 @@ public final class Database {
         }
 
         public Database build() {
-            Objects.requireNonNull(classLoader);
-            Objects.requireNonNull(dataFolder);
-            Objects.requireNonNull(name);
-            Objects.requireNonNull(executor);
-            Objects.requireNonNull(logger);
-            HikariDataSource source = new HikariDataSourceCreation(this.config, this.dataFolder, this.name).create();
-            Jdbi jdbi = new JdbiCreation(source).create();
+            Database database = buildNoMigrations();
             Flyway flyway = Flyway.configure(classLoader)
-                    .dataSource(source)
+                    .dataSource(database.dataSource)
                     .baselineVersion("0")
                     .locations("classpath:db/migration")
                     .baselineOnMigrate(true)
@@ -95,7 +89,20 @@ public final class Database {
             flyway.repair();
             flyway.migrate();
 
+            return database;
+        }
+
+        public Database buildNoMigrations() {
+            Objects.requireNonNull(classLoader);
+            Objects.requireNonNull(dataFolder);
+            Objects.requireNonNull(name);
+            Objects.requireNonNull(executor);
+            Objects.requireNonNull(logger);
+            HikariDataSource source = new HikariDataSourceCreation(this.config, this.dataFolder, this.name).create();
+            Jdbi jdbi = new JdbiCreation(source).create();
+
             return new Database(new AsyncJdbi(executor, jdbi, logger), source);
+
         }
 
     }
