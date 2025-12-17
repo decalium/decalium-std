@@ -4,6 +4,7 @@ package ru.decalium.std.java.duration;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.ParsePosition;
+import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -41,6 +42,10 @@ public final class DurationParser {
     private final Map<Character, TimeUnit> units;
     private final SortedMap<TimeUnit, Character> unitToChar;
 
+    public Duration parse(String duration) throws ParseException {
+        return Duration.ofSeconds(parseToSeconds(duration));
+    }
+
     public long parseToSeconds(final String duration) throws ParseException {
 
         long total = 0;
@@ -74,6 +79,10 @@ public final class DurationParser {
         } while (parsePosition.getIndex() < duration.length());
 
         return total;
+    }
+
+    public String format(Duration duration) {
+        return secondsToString(duration.toSeconds());
     }
     
     public String secondsToString(long seconds) {
