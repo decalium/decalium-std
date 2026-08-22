@@ -1,6 +1,7 @@
 package ru.decalium.std.paper.items;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.Tag;
@@ -25,10 +26,13 @@ import java.util.function.Consumer;
 
 public final class ItemBuilder implements Format<ItemBuilder> {
 
+
+
     private final ItemStack item;
     private final ItemMeta meta;
     private final TagResolver.Builder builder = TagResolver.builder();
     private String displayName;
+    private MiniMessage miniMessage = MiniMessage.miniMessage();
     private List<String> lore = new ArrayList<>();
 
     public static ItemBuilder builder(ItemStack item) {
@@ -71,6 +75,11 @@ public final class ItemBuilder implements Format<ItemBuilder> {
     @Override
     public ItemBuilder with(Collection<? extends TagResolver> resolvers) {
         this.builder.resolvers(resolvers);
+        return this;
+    }
+
+    public ItemBuilder miniMessage(MiniMessage miniMessage) {
+        this.miniMessage = miniMessage;
         return this;
     }
 
@@ -167,8 +176,9 @@ public final class ItemBuilder implements Format<ItemBuilder> {
         return stack;
     }
 
-    private static Component parse(String text, TagResolver resolver) {
-        return MiniMessage.miniMessage().deserialize(text, resolver)
+    private Component parse(String text, TagResolver resolver) {
+        return miniMessage.deserialize(text, resolver)
+                .colorIfAbsent(NamedTextColor.WHITE)
                 .decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE);
     }
 }
