@@ -4,11 +4,16 @@ import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 
 
 import com.zaxxer.hikari.HikariConfig;
+import org.spongepowered.configurate.objectmapping.meta.Comment;
 import ru.decalium.std.database.sql.SqlConfig;
 
 @ConfigSerializable
 public class SqlConfigImpl implements SqlConfig {
 
+    @Comment("Supported types: H2, SQLITE, MARIADB.")
+    private DatabaseType databaseType = DatabaseType.H2;
+    @Comment("This is option left for backwards compatibility. " +
+            "If set to false, uses databaseType value. If true - uses MARIADB")
     private boolean mysqlEnabled = false;
     private String host = "localhost";
     private String username = "gepron1x";
@@ -18,9 +23,11 @@ public class SqlConfigImpl implements SqlConfig {
     private HikariPoolImpl hikariPoolSettings = new HikariPoolImpl();
 
 
+
     @Override
-    public boolean mysqlEnabled() {
-        return this.mysqlEnabled;
+    public DatabaseType databaseType() {
+        if(this.mysqlEnabled) return DatabaseType.MARIADB;
+        return this.databaseType;
     }
 
     @Override

@@ -6,7 +6,6 @@ import com.zaxxer.hikari.HikariDataSource;
 import java.io.File;
 import java.nio.file.Path;
 import java.text.MessageFormat;
-import java.util.StringTokenizer;
 
 public class HikariDataSourceCreation {
 
@@ -33,18 +32,26 @@ public class HikariDataSourceCreation {
     private void setupConnection(HikariConfig config) {
 
         String url, username, password;
-
-        if (sqlConfig.mysqlEnabled()) {
-            url = MessageFormat.format("jdbc:mysql://{0}/{1}?useSSL=false", sqlConfig.host(), sqlConfig.database());
-            username = sqlConfig.username();
-            password = sqlConfig.password();
-        } else {
-            Path path = dataFolder.toPath().resolve(name);
-            url = MessageFormat.format("jdbc:h2:file:./{0};mode=MySQL", path);
-            username = "sa";
-            password = "";
+        Path path = dataFolder.toPath();
+        switch (sqlConfig.databaseType()) {
+            case H2 -> {
+                url = MessageFormat.format("jdbc:h2:file:./{0};mode=MySQL", path.resolve(name));
+                username = "sa";
+                password = "";
+            }
+            case SQLITE -> {
+                url = MessageFormat.format("jdbc:sqlite:{0}", path.resolve(name+".sqlite.db"));
+                username = null;
+                password = null;
+            }
+            case MARIADB -> {
+                url = MessageFormat.format("jdbc:mysql://{0}/{1}?useSSL=false", sqlConfig.host(), sqlConfig.database());
+                username = sqlConfig.username();
+                password = sqlConfig.password();
+            }
+            default -> throw new IllegalStateException("Unsupported database type");
         }
-        config.setDriverClassName(sqlConfig.mysqlEnabled() ? "com.mysql.cj.jdbc.Driver" : "org.h2.Driver");
+        config.setDriverClassName(sqlConfig.databaseType().driverClassName());
         config.setJdbcUrl(url);
         config.setUsername(username);
         config.setPassword(password);
