@@ -1,6 +1,7 @@
 package ru.decalium.std.paper.items;
 
 import com.destroystokyo.paper.profile.PlayerProfile;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -25,6 +26,11 @@ public interface ItemSource {
 
     static ItemStackSource itemStack(ItemStack itemStack) {
         return new ItemStackSource(itemStack);
+    }
+
+    static ModernItemSource factory(String string) {
+        ItemStack item = Bukkit.getItemFactory().createItemStack(string);
+        return new ModernItemSource(item, string);
     }
 
     ItemStack create(int amount);
@@ -53,6 +59,16 @@ public interface ItemSource {
         @Override
         public ItemStack create(int amount) {
             ItemStack stack = base.clone();
+            stack.setAmount(amount);
+            return stack;
+        }
+    }
+
+    record ModernItemSource(ItemStack item, String source) implements ItemSource {
+
+        @Override
+        public ItemStack create(int amount) {
+            ItemStack stack = item.clone();
             stack.setAmount(amount);
             return stack;
         }

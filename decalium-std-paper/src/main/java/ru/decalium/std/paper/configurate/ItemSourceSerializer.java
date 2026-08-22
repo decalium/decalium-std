@@ -15,12 +15,14 @@ public final class ItemSourceSerializer implements TypeSerializer<ItemSource> {
     @Override
     public ItemSource deserialize(Type type, ConfigurationNode node) throws SerializationException {
         String s = node.require(String.class);
-        Material material = Material.matchMaterial(s);
-        if(material != null) return ItemSource.material(material);
         if(s.startsWith("skull:")) {
             return ItemSource.skullByBase64(s.substring("skull:".length()));
         }
-        throw new SerializationException("Don't know how serialize " + s);
+        try {
+            return ItemSource.factory(s);
+        } catch (IllegalArgumentException ex) {
+            throw new SerializationException(ex);
+        }
     }
 
     @Override
@@ -36,6 +38,8 @@ public final class ItemSourceSerializer implements TypeSerializer<ItemSource> {
                     .filter(property -> "textures".equals(property.getName()))
                     .map(ProfileProperty::getValue).findAny().orElseThrow();
             node.set("skull:" + base64);
+        } else if(obj instanceof  ItemSource.ModernItemSource modern) {
+            node.set(modern);
         }
     }
 }
