@@ -3,6 +3,7 @@ package ru.decalium.std.database;
 import com.zaxxer.hikari.HikariDataSource;
 import org.flywaydb.core.Flyway;
 import org.jdbi.v3.core.Jdbi;
+import org.jdbi.v3.core.async.JdbiExecutor;
 import org.slf4j.Logger;
 import ru.decalium.std.database.sql.AsyncJdbi;
 import ru.decalium.std.database.sql.HikariDataSourceCreation;
@@ -25,6 +26,10 @@ public final class Database {
 
     public AsyncJdbi asyncJdbi() {
         return this.jdbi;
+    }
+
+    public Jdbi jdbi() {
+        return this.jdbi.jdbi();
     }
 
     public HikariDataSource dataSource() {
