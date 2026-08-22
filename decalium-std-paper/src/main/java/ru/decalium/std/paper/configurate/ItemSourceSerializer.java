@@ -39,7 +39,7 @@ public final class ItemSourceSerializer implements TypeSerializer<ItemSource> {
                     .map(ProfileProperty::getValue).findAny().orElseThrow();
             node.set("skull:" + base64);
         } else if(obj instanceof  ItemSource.ModernItemSource modern) {
-            node.set(modern);
+            node.set(modern.source());
         }
     }
 }
