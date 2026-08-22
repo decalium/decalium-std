@@ -3,7 +3,7 @@ plugins {
 }
 
 group = "ru.decalium.std"
-version = "1.1.2"
+version = "1.2.0"
 
 repositories {
     mavenCentral()
